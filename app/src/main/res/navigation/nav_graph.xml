@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/nav_graph"
+            app:startDestination="@id/GeneralFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.yurich.receipts.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first" >
+        android:id="@+id/GeneralFragment"
+        android:name="com.yurich.receipts.presentation.general.GeneralFragment"
+        android:label="@string/general_fragment_label"
+        tools:layout="@layout/fragment_general">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_GeneralFragment_to_DetailFragment"
+            app:destination="@id/DetailFragment">
+
+            <argument
+                android:name="@string/single_recipe_id"
+                app:nullable="false"
+                app:argType="string" />
+
+        </action>
+
     </fragment>
+
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.yurich.receipts.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second" >
+        android:id="@+id/DetailFragment"
+        android:name="com.yurich.receipts.presentation.detail.DetailFragment"
+        android:label="@string/detail_fragment_label"
+        tools:layout="@layout/fragment_detail"/>
 
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
 </navigation>
