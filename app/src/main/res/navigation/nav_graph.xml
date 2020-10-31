@@ -17,7 +17,7 @@
 
             <argument
                 android:name="@string/single_recipe_id"
-                app:nullable="false"
+                app:nullable="true"
                 app:argType="string" />
 
         </action>
