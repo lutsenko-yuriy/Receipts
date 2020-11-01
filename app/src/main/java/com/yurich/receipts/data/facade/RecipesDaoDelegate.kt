@@ -24,7 +24,7 @@ class RecipesDaoDelegate(
             }
 
     override fun updateRecipes(recipes: List<RecipeEntity>) =
-        dao.insertRecipes(recipes.map { mapper.buildDbRecipeWithImages(it) })
+        dao.insertRecipes(recipes.map { mapper.buildDbRecipe(it) })
             .flatMap { getRecipeByIds(it) }
 
 }

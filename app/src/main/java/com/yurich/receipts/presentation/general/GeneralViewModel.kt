@@ -5,9 +5,13 @@ import com.airbnb.mvrx.BuildConfig
 import com.yurich.receipts.data.facade.RecipesLocalStorage
 
 class GeneralViewModel(
-    initialState: GeneralViewState
+    initialState: GeneralViewState,
     private val storage: RecipesLocalStorage
 ) : BaseMvRxViewModel<GeneralViewState>(initialState, debugMode = BuildConfig.DEBUG) {
+
+    init {
+        retrieveRecipes()
+    }
 
     fun retrieveRecipes() = withState { state ->
         if (!state.data.shouldLoad) return@withState

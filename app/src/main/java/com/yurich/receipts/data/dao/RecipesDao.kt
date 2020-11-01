@@ -18,6 +18,6 @@ interface RecipesDao {
 
     @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertRecipes(recipes: List<RecipeWithImages>): Single<List<Long>>
+    fun insertRecipes(recipes: List<DBRecipe>): Single<List<Long>>
 
 }

@@ -26,23 +26,11 @@ class RecipesMapperService {
             Uri.parse(dbImage.uri)
         )
 
-    fun buildDbRecipeWithImages(recipeEntity: RecipeEntity) =
-        RecipeWithImages(
-            buildDbRecipe(recipeEntity),
-            buildDbImages(recipeEntity)
-        )
-
-    private fun buildDbRecipe(recipeEntity: RecipeEntity) =
+    fun buildDbRecipe(recipeEntity: RecipeEntity) =
         DBRecipe(
             recipeEntity.id,
             recipeEntity.title,
             recipeEntity.description
         )
-
-    private fun buildDbImages(recipeEntity: RecipeEntity) =
-        recipeEntity.images.map { buildDbImage(it) }
-
-    private fun buildDbImage(imageEntity: ImageEntity) =
-        DBImage(imageEntity.id, imageEntity.uri.toString())
 
 }

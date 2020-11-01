@@ -1,14 +1,20 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+kapt {
+    correctErrorTypes = true
+}
 
 android {
     compileSdkVersion 30
 
     defaultConfig {
         applicationId "com.yurich.receipts"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 30
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
 
@@ -42,15 +48,20 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation 'com.airbnb.android:mvrx:1.5.1'
 
     implementation "com.airbnb.android:epoxy:4.1.0"
-    annotationProcessor "com.airbnb.android:epoxy-processor:4.1.0"
+    kapt "com.airbnb.android:epoxy-processor:4.1.0"
 
     implementation "org.koin:koin-android:2.2.0-rc-3"
     implementation "org.koin:koin-android-scope:2.2.0-rc-3"
 
     implementation "androidx.room:room-runtime:2.2.5"
-    annotationProcessor "androidx.room:room-compiler:2.2.5"
+    implementation "androidx.room:room-rxjava2:2.2.5"
+    kapt "androidx.room:room-compiler:2.2.5"
+
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
 }

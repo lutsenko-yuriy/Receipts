@@ -9,7 +9,11 @@ data class RecipeWithImages(
     @Relation(
         parentColumn = "recipeId",
         entityColumn = "imageId",
-        associateBy = Junction(RecipeWithImages::class)
+        associateBy = Junction(
+            value = RecipeImageCrossRef::class,
+            parentColumn = "recipeId",
+            entityColumn = "imageId"
+        )
     )
     val images: List<DBImage>
 )

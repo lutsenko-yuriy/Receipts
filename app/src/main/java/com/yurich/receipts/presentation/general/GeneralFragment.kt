@@ -26,10 +26,6 @@ class GeneralFragment : BaseFragment() {
 
             data.forEach { recipe ->
 
-                carousel {
-
-                }
-
             }
         }
 
