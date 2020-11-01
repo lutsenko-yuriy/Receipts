@@ -2,6 +2,7 @@ package com.yurich.receipts.data.facade
 
 import com.yurich.receipts.data.dao.RecipesDao
 import com.yurich.receipts.domain.RecipeEntity
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
 class RecipesDaoDelegate(
@@ -24,7 +25,10 @@ class RecipesDaoDelegate(
             }
 
     override fun updateRecipes(recipes: List<RecipeEntity>) =
-        dao.insertRecipes(recipes.map { mapper.buildDbRecipe(it) })
-            .flatMap { getRecipeByIds(it) }
+        Single.merge(listOf(
+            dao.insertRecipes(recipes.map { mapper.buildDbRecipe(it) }),
+            dao.insertImages(recipes.map { mapper.buildDbImages(it) }.flatten()),
+            dao.insertRelations(recipes.map { mapper.buildDbRelation(it) }.flatten())
+        )).lastOrError().map { recipes }
 
 }

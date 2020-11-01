@@ -3,6 +3,7 @@ package com.yurich.receipts.data.facade
 import android.net.Uri
 import com.yurich.receipts.data.entities.DBImage
 import com.yurich.receipts.data.entities.DBRecipe
+import com.yurich.receipts.data.entities.RecipeImageCrossRef
 import com.yurich.receipts.data.entities.RecipeWithImages
 import com.yurich.receipts.domain.ImageEntity
 import com.yurich.receipts.domain.RecipeEntity
@@ -32,5 +33,14 @@ class RecipesMapperService {
             recipeEntity.title,
             recipeEntity.description
         )
+
+    fun buildDbImages(recipeEntity: RecipeEntity) =
+        recipeEntity.images.map { buildDbImage(it) }
+
+    private fun buildDbImage(imageEntity: ImageEntity) =
+        DBImage(imageEntity.id, imageEntity.uri.toString())
+
+    fun buildDbRelation(recipeEntity: RecipeEntity) =
+        recipeEntity.images.map { RecipeImageCrossRef(recipeEntity.id, it.id) }
 
 }
