@@ -21,7 +21,7 @@ object RecipesDatabaseFactory {
                     "recipes"
                 ).build()
 
-            database
+            database ?: error("The database should be initialized by the moment")
         }
 
 }
