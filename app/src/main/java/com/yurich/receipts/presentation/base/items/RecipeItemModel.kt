@@ -2,10 +2,8 @@ package com.yurich.receipts.presentation.base.items
 
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
-import com.airbnb.epoxy.EpoxyAttribute
-import com.airbnb.epoxy.EpoxyHolder
-import com.airbnb.epoxy.EpoxyModelClass
-import com.airbnb.epoxy.EpoxyModelWithHolder
+import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.epoxy.*
 import com.yurich.receipts.R
 import com.yurich.receipts.domain.RecipeEntity
 
@@ -28,9 +26,13 @@ abstract class RecipeItemModel : EpoxyModelWithHolder<RecipeItemModel.Holder>() 
         lateinit var title: AppCompatTextView
         lateinit var description: AppCompatTextView
 
+        lateinit var images: RecyclerView
+
         override fun bindView(itemView: View) {
             title = itemView.findViewById(R.id.title)
             description = itemView.findViewById(R.id.description)
+
+            images = itemView.findViewById(R.id.images)
         }
     }
 }

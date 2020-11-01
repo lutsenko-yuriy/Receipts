@@ -1,10 +1,10 @@
 package com.yurich.receipts.presentation.general
 
-import com.airbnb.epoxy.carousel
 import com.airbnb.mvrx.fragmentViewModel
 import com.yurich.receipts.R
 import com.yurich.receipts.presentation.base.BaseFragment
 import com.yurich.receipts.presentation.base.MvRxEpoxyController
+import com.yurich.receipts.presentation.base.items.recipeItem
 import com.yurich.receipts.presentation.base.simpleController
 
 
@@ -25,7 +25,10 @@ class GeneralFragment : BaseFragment() {
             val data = state.data() ?: emptyList()
 
             data.forEach { recipe ->
+                recipeItem {
+                    recipe(recipe)
 
+                }
             }
         }
 
