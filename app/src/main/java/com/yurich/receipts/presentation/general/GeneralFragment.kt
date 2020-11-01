@@ -1,32 +1,36 @@
 package com.yurich.receipts.presentation.general
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import androidx.navigation.fragment.findNavController
+import com.airbnb.epoxy.carousel
+import com.airbnb.mvrx.fragmentViewModel
 import com.yurich.receipts.R
+import com.yurich.receipts.presentation.base.BaseFragment
+import com.yurich.receipts.presentation.base.MvRxEpoxyController
+import com.yurich.receipts.presentation.base.simpleController
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
-class GeneralFragment : Fragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_general, container, false)
+class GeneralFragment : BaseFragment() {
+
+    private val viewModel: GeneralViewModel by fragmentViewModel()
+
+    override fun titleResId() = R.string.recipes_list_title
+
+    override fun additionalButtonImageRes() = android.R.drawable.ic_input_add
+
+    override fun onAdditionalButtonClicked() {
+        navigateTo(R.id.action_GeneralFragment_to_DetailFragment)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun epoxyController(): MvRxEpoxyController =
+        simpleController(viewModel) { state ->
+            val data = state.data() ?: emptyList()
 
-        view.findViewById<Button>(R.id.button_first).setOnClickListener {
-            findNavController().navigate(R.id.action_GeneralFragment_to_DetailFragment)
+            data.forEach { recipe ->
+
+                carousel {
+
+                }
+
+            }
         }
-    }
+
 }

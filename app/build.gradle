@@ -43,7 +43,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    implementation 'com.airbnb.android:mvrx:2.0.0-beta2'
+    implementation 'com.airbnb.android:mvrx:1.5.1'
 
     implementation "com.airbnb.android:epoxy:4.1.0"
     annotationProcessor "com.airbnb.android:epoxy-processor:4.1.0"
