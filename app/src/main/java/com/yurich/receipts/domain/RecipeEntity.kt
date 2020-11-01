@@ -4,5 +4,5 @@ data class RecipeEntity(
     val id: Long,
     val title: String,
     val description: String,
-    val images: List<RecipeImage>
+    val images: List<ImageEntity>
 )

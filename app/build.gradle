@@ -48,6 +48,9 @@ dependencies {
     implementation "com.airbnb.android:epoxy:4.1.0"
     annotationProcessor "com.airbnb.android:epoxy-processor:4.1.0"
 
-    compile "org.koin:koin-android:2.2.0-rc-3"
-    compile "org.koin:koin-android-scope:2.2.0-rc-3"
+    implementation "org.koin:koin-android:2.2.0-rc-3"
+    implementation "org.koin:koin-android-scope:2.2.0-rc-3"
+
+    implementation "androidx.room:room-runtime:2.2.5"
+    annotationProcessor "androidx.room:room-compiler:2.2.5"
 }
