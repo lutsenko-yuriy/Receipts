@@ -5,6 +5,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.*
 import com.yurich.receipts.R
+import com.yurich.receipts.domain.ImageEntity
 import com.yurich.receipts.domain.RecipeEntity
 
 @EpoxyModelClass(layout = R.layout.recipe_item)
@@ -13,11 +14,18 @@ abstract class RecipeItemModel : EpoxyModelWithHolder<RecipeItemModel.Holder>() 
     @EpoxyAttribute
     lateinit var recipe: RecipeEntity
 
+    @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
+    var onRecipeClickListener: View.OnClickListener? = null
+
     override fun bind(holder: Holder) {
         super.bind(holder)
         with(recipe) {
             holder.title.text = title
             holder.description.text = description
+
+            holder.updateImages(images)
+
+            holder.rootView.setOnClickListener(onRecipeClickListener)
         }
     }
 
@@ -28,11 +36,19 @@ abstract class RecipeItemModel : EpoxyModelWithHolder<RecipeItemModel.Holder>() 
 
         lateinit var images: RecyclerView
 
+        lateinit var rootView: View
+
         override fun bindView(itemView: View) {
             title = itemView.findViewById(R.id.title)
             description = itemView.findViewById(R.id.description)
 
             images = itemView.findViewById(R.id.images)
+
+            rootView = itemView
+        }
+
+        fun updateImages(images: List<ImageEntity>) {
+
         }
     }
 }

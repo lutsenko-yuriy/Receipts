@@ -10,4 +10,6 @@
     <string name="recipe_detail_title">Add Recipe</string>
 
     <string name="single_recipe_id">recipeId</string>
+    <string name="recipe_title_hint">Title</string>
+    <string name="recipe_description_hint">Description</string>
 </resources>

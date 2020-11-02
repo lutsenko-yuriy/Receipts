@@ -6,5 +6,10 @@ import com.airbnb.mvrx.Uninitialized
 import com.yurich.receipts.domain.RecipeEntity
 
 data class DetailViewState(
-    val data: Async<List<RecipeEntity>> = Uninitialized
-) : MvRxState
+    val id: Long?,
+    val currentData: Async<RecipeEntity> = Uninitialized
+) : MvRxState {
+
+    constructor(argument: DetailFragmentArgument): this(id = argument.id)
+
+}

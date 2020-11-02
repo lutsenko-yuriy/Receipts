@@ -25,10 +25,19 @@ class RecipesDaoDelegate(
             }
 
     override fun updateRecipes(recipes: List<RecipeEntity>) =
-        Single.merge(listOf(
-            dao.insertRecipes(recipes.map { mapper.buildDbRecipe(it) }),
-            dao.insertImages(recipes.map { mapper.buildDbImages(it) }.flatten()),
-            dao.insertRelations(recipes.map { mapper.buildDbRelation(it) }.flatten())
-        )).lastOrError().map { recipes }
+        Single.just(dao.removeRelationsOfRecipe(recipes.map { it.id }))
+            .flatMap {
+                dao.insertRelations(recipes.map { mapper.buildDbRelation(it) }.flatten())
+            }
+            .flatMap {
+                dao.insertImages(recipes.map { mapper.buildDbImages(it) }.flatten())
+            }
+            .flatMap { dao.insertRecipes(recipes.map { mapper.buildDbRecipe(it) }) }
+            .flatMap { dao.getAllByIds(it) }
+            .map { savedRecipes ->
+                savedRecipes.map { recipe ->
+                    mapper.buildRecipeEntity(recipe)
+                }
+            }
 
 }
