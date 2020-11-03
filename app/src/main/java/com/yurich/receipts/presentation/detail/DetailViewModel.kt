@@ -65,6 +65,14 @@ class DetailViewModel(
             selectedImageUri: Uri
     ) = ImageEntity(selectedImageUri)
 
+    fun removeImage(imageEntity: ImageEntity) = withState {
+        val oldState = it.currentData() ?: return@withState
+        val newState = oldState.copy(images = oldState.images - imageEntity)
+        Single.just(newState)
+            .execute { newData -> copy(currentData = newData) }
+    }
+
+
     companion object : MvRxViewModelFactory<DetailViewModel, DetailViewState> {
         @JvmStatic
         override fun create(viewModelContext: ViewModelContext, state: DetailViewState): DetailViewModel {

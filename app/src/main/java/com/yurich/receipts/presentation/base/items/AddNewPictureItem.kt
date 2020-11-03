@@ -1,4 +1,4 @@
-package com.yurich.receipts.presentation.base
+package com.yurich.receipts.presentation.base.items
 
 import android.content.Context
 import android.util.AttributeSet

@@ -2,12 +2,10 @@ package com.yurich.receipts.presentation.base.items
 
 import android.content.Context
 import android.text.Editable
-import android.text.Spanned
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.ScrollView
 import com.airbnb.epoxy.*
 import com.yurich.receipts.R
 
@@ -21,11 +19,17 @@ class RecipeDetailItemView @JvmOverloads constructor(
     private val titleView by lazy { findViewById<EditText>(R.id.recipe_title) }
     private val descriptionView by lazy { findViewById<EditText>(R.id.recipe_description) }
 
-    private val titleWatcher = SimpleTextWatcher { onTitleChanged?.invoke(it) }
-    private val descriptionWatcher = SimpleTextWatcher { onDescriptionChanged?.invoke(it) }
+    private val titleWatcher = simpleTextWatcher { onTitleChanged?.invoke(it) }
+    private val descriptionWatcher = simpleTextWatcher { onDescriptionChanged?.invoke(it) }
 
     init {
         inflate(context, R.layout.add_edit_recipe_view, this)
+
+        val padding = (context.resources.displayMetrics.density * 16).toInt()
+
+        setPadding(padding, padding, padding, padding)
+        orientation = VERTICAL
+
         titleView.addTextChangedListener(titleWatcher)
         descriptionView.addTextChangedListener(descriptionWatcher)
     }
@@ -46,50 +50,25 @@ class RecipeDetailItemView @JvmOverloads constructor(
     @set:CallbackProp
     var onDescriptionChanged: ((newText: String) -> Unit)? = null
 
-}
+    fun simpleTextWatcher(onTextChanged: (newText: String) -> Unit) = object : TextWatcher {
+        override fun afterTextChanged(s: Editable) {
+        }
 
-fun EditText.setTextIfDifferent(newText: CharSequence?): Boolean {
-    if (!isTextDifferent(newText, text)) {
-        return false
-    }
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+        }
 
-    setText(newText)
-    setSelection(newText?.length ?: 0)
-    return true
-}
-
-fun isTextDifferent(str1: CharSequence?, str2: CharSequence?): Boolean {
-    if (str1 === str2) {
-        return false
-    }
-    if (str1 == null || str2 == null) {
-        return true
-    }
-    val length = str1.length
-    if (length != str2.length) {
-        return true
-    }
-
-    if (str1 is Spanned) {
-        return str1 != str2
-    }
-
-    for (i in 0 until length) {
-        if (str1[i] != str2[i]) {
-            return true
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            onTextChanged(s.toString())
         }
     }
-    return false
-}
 
-private class SimpleTextWatcher(val onTextChanged: (newText: String) -> Unit) : TextWatcher {
-    override fun afterTextChanged(s: Editable) {
-    }
+    private fun EditText.setTextIfDifferent(newText: CharSequence?): Boolean {
+        if (newText.toString() != text.toString()) {
+            return false
+        }
 
-    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-    }
-
-    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-        onTextChanged(s.toString())
+        setText(newText)
+        setSelection(newText?.length ?: 0)
+        return true
     }
 }

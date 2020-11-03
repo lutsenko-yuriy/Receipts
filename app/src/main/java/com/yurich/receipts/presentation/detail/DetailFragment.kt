@@ -2,11 +2,14 @@ package com.yurich.receipts.presentation.detail
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.carousel
 import com.airbnb.mvrx.fragmentViewModel
 import com.yurich.receipts.R
-import com.yurich.receipts.presentation.base.AddNewPictureItemModel_
+import com.yurich.receipts.domain.ImageEntity
 import com.yurich.receipts.presentation.base.BaseFragment
+import com.yurich.receipts.presentation.base.items.AddNewPictureItemModel_
+import com.yurich.receipts.presentation.base.items.DeletablePictureItemModel_
 import com.yurich.receipts.presentation.base.items.recipeDetailItemView
 import com.yurich.receipts.presentation.base.simpleController
 
@@ -42,10 +45,18 @@ class DetailFragment : BaseFragment() {
             carousel {
                 id("carousel")
 
-                val models = mutableListOf(
+                val models = mutableListOf<EpoxyModel<*>>(
                     AddNewPictureItemModel_()
                         .id("Add new picture")
                         .onClicked { requestLoadingNewPicture() }
+                )
+                models.addAll(
+                    currentData.images.map {
+                        DeletablePictureItemModel_()
+                            .id(it.uri.toString())
+                            .uri(it.uri)
+                            .onRemoveRequested { onRemoveImageRequested(it) }
+                    }
                 )
                 models(models)
             }
@@ -54,7 +65,7 @@ class DetailFragment : BaseFragment() {
     private fun requestLoadingNewPicture() {
         val intent = Intent().apply {
             type = "image/*"
-            action = Intent.ACTION_GET_CONTENT
+            action = Intent.ACTION_OPEN_DOCUMENT
         }
         startActivityForResult(
             Intent.createChooser(intent, "Select Picture"),
@@ -67,6 +78,10 @@ class DetailFragment : BaseFragment() {
             val selectedImageUri = data?.data ?: return
             viewModel.addNewImage(selectedImageUri)
         }
+    }
+
+    private fun onRemoveImageRequested(imageEntity: ImageEntity) {
+        viewModel.removeImage(imageEntity)
     }
 
     companion object {
