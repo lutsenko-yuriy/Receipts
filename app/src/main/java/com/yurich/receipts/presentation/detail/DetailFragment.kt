@@ -32,14 +32,13 @@ class DetailFragment : BaseFragment() {
             val currentData = state.currentData() ?: return@simpleController
 
             recipeDetailItemView {
-                id(state.id)
+                id("Text fields")
 
                 title(currentData.title)
                 onTitleChanged { viewModel.onTitleUpdated(it) }
 
                 description(currentData.description)
                 onDescriptionChanged { viewModel.onDescriptionUpdated(it) }
-
             }
 
             carousel {
