@@ -12,12 +12,7 @@ class GeneralViewModel(
     private val storage: RecipesLocalStorage
 ) : BaseMvRxViewModel<GeneralViewState>(initialState, debugMode = BuildConfig.DEBUG) {
 
-    init {
-        retrieveRecipes()
-    }
-
-    fun retrieveRecipes() = withState { state ->
-        if (!state.data.shouldLoad) return@withState
+    fun retrieveRecipes() = withState {
         storage.getAllRecipes().execute { copy(data = it) }
     }
 

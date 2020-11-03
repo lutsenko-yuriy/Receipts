@@ -16,6 +16,7 @@ class DetailFragment : BaseFragment() {
 
     override fun onAdditionalButtonClicked() {
         viewModel.save()
+        activity?.onBackPressed()
     }
 
     override fun epoxyController() =
