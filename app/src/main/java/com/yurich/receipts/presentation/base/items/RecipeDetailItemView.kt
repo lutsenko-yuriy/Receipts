@@ -6,10 +6,9 @@ import android.text.Spanned
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.ScrollView
-import com.airbnb.epoxy.CallbackProp
-import com.airbnb.epoxy.ModelView
-import com.airbnb.epoxy.TextProp
+import com.airbnb.epoxy.*
 import com.yurich.receipts.R
 
 @ModelView(autoLayout = ModelView.Size.MATCH_WIDTH_MATCH_HEIGHT)
@@ -17,7 +16,7 @@ class RecipeDetailItemView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : ScrollView(context, attrs, defStyleAttr) {
+) : LinearLayout(context, attrs, defStyleAttr) {
 
     private val titleView by lazy { findViewById<EditText>(R.id.recipe_title) }
     private val descriptionView by lazy { findViewById<EditText>(R.id.recipe_description) }
@@ -46,6 +45,7 @@ class RecipeDetailItemView @JvmOverloads constructor(
 
     @set:CallbackProp
     var onDescriptionChanged: ((newText: String) -> Unit)? = null
+
 }
 
 fun EditText.setTextIfDifferent(newText: CharSequence?): Boolean {

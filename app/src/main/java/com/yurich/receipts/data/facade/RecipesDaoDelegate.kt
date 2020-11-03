@@ -12,27 +12,25 @@ class RecipesDaoDelegate(
 
     override fun getAllRecipes() =
         dao.getAll()
-            .subscribeOn(Schedulers.io())
             .map { recipes ->
                 recipes.map { mapper.buildRecipeEntity(it) }
             }
 
     override fun getRecipeByIds(ids: List<Long>) =
         dao.getAllByIds(ids)
-            .subscribeOn(Schedulers.io())
             .map { recipes ->
                 recipes.map { mapper.buildRecipeEntity(it) }
             }
 
     override fun updateRecipes(recipes: List<RecipeEntity>) =
         Single.just(dao.removeRelationsOfRecipe(recipes.map { it.id }))
-            .flatMap {
-                dao.insertRelations(recipes.map { mapper.buildDbRelation(it) }.flatten())
-            }
+            .flatMap { dao.insertRecipes(recipes.map { mapper.buildDbRecipe(it) }) }
             .flatMap {
                 dao.insertImages(recipes.map { mapper.buildDbImages(it) }.flatten())
             }
-            .flatMap { dao.insertRecipes(recipes.map { mapper.buildDbRecipe(it) }) }
+            .flatMap {
+                dao.insertRelations(recipes.map { mapper.buildDbRelation(it) }.flatten())
+            }
             .flatMap { dao.getAllByIds(it) }
             .map { savedRecipes ->
                 savedRecipes.map { recipe ->

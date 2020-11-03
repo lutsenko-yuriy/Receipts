@@ -5,6 +5,5 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class DBImage(
-    @PrimaryKey val imageId: Long,
-    val uri: String
+    @PrimaryKey val uri: String
 )

@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 
 @Entity(
-    primaryKeys = ["recipeId", "imageId"],
+    primaryKeys = ["recipeId", "imageUri"],
     foreignKeys = [
         ForeignKey(
             entity = DBRecipe::class,
@@ -14,13 +14,13 @@ import androidx.room.ForeignKey
         ),
         ForeignKey(
             entity = DBImage::class,
-            parentColumns = ["imageId"],
-            childColumns = ["imageId"],
+            parentColumns = ["uri"],
+            childColumns = ["imageUri"],
             onDelete = ForeignKey.CASCADE
         )
     ]
 )
 data class RecipeImageCrossRef(
     val recipeId: Long,
-    val imageId: Long
+    val imageUri: String
 )

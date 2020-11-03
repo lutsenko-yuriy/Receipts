@@ -22,10 +22,7 @@ class RecipesMapperService {
         images.map { buildImageEntity(it) }
 
     private fun buildImageEntity(dbImage: DBImage) =
-        ImageEntity(
-            dbImage.imageId,
-            Uri.parse(dbImage.uri)
-        )
+        ImageEntity(Uri.parse(dbImage.uri))
 
     fun buildDbRecipe(recipeEntity: RecipeEntity) =
         DBRecipe(
@@ -38,9 +35,9 @@ class RecipesMapperService {
         recipeEntity.images.map { buildDbImage(it) }
 
     private fun buildDbImage(imageEntity: ImageEntity) =
-        DBImage(imageEntity.id, imageEntity.uri.toString())
+        DBImage(imageEntity.uri.toString())
 
     fun buildDbRelation(recipeEntity: RecipeEntity) =
-        recipeEntity.images.map { RecipeImageCrossRef(recipeEntity.id, it.id) }
+        recipeEntity.images.map { RecipeImageCrossRef(recipeEntity.id, it.uri.toString()) }
 
 }
