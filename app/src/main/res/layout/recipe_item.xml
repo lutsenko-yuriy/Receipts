@@ -1,34 +1,44 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:tools="http://schemas.android.com/tools"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="vertical"
-       android:background="?attr/selectableItemBackground"
-       tools:parentTag="android.widget.LinearLayout">
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
 
-    <TextView
-        android:id="@+id/title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
         android:paddingTop="24dp"
-        android:textSize="18sp"
-        tools:text="Title" />
+        android:paddingBottom="24dp"
+        android:orientation="vertical">
 
-    <com.airbnb.epoxy.EpoxyRecyclerView
-        android:id="@+id/images"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"
+            android:textSize="18sp"
+            tools:text="Title"/>
 
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="8dp"
-        android:textSize="14sp"
-        tools:text="Subtitle" />
+        <com.airbnb.epoxy.EpoxyRecyclerView
+            android:id="@+id/images"
+            android:layout_height="200dp"
+            android:layout_width="match_parent"/>
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="8dp"
+            android:textSize="14sp"
+            tools:text="Subtitle"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -16,6 +16,7 @@
         android:layout_height="32dp"
         android:layout_width="32dp"
         android:layout_gravity="top|end"
+        android:visibility="gone"
         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
 </merge>

@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.widget.EditText
 import android.widget.LinearLayout
 import com.airbnb.epoxy.*
@@ -25,7 +26,10 @@ class RecipeDetailItemView @JvmOverloads constructor(
     init {
         inflate(context, R.layout.add_edit_recipe_view, this)
 
-        val padding = (context.resources.displayMetrics.density * 16).toInt()
+        val padding =
+            TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 16f, context.resources.displayMetrics
+            ).toInt()
 
         setPadding(padding, padding, padding, padding)
         orientation = VERTICAL
