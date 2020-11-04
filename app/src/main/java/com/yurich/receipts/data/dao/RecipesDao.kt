@@ -27,6 +27,7 @@ abstract class RecipesDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract fun insertRelations(crossRefs: List<RecipeImageCrossRef>): Single<List<Long>>
 
+    @Transaction
     @Query("DELETE FROM RecipeImageCrossRef WHERE recipeId IN (:recipeIds)")
     abstract fun removeRelationsOfRecipe(recipeIds: List<Long>): Int
 

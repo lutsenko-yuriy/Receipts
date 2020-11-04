@@ -13,7 +13,6 @@ import com.yurich.receipts.presentation.base.items.DeletablePictureItemModel_
 import com.yurich.receipts.presentation.base.items.recipeDetailItemView
 import com.yurich.receipts.presentation.base.simpleController
 
-
 class DetailFragment : BaseFragment() {
 
     private val viewModel: DetailViewModel by fragmentViewModel()
@@ -24,11 +23,14 @@ class DetailFragment : BaseFragment() {
 
     override fun onAdditionalButtonClicked() {
         viewModel.save()
-        activity?.onBackPressed()
     }
 
     override fun epoxyController() =
         simpleController(viewModel) { state ->
+            if (state.afterSave) {
+                activity?.onBackPressed()
+                return@simpleController
+            }
             val currentData = state.currentData() ?: return@simpleController
 
             recipeDetailItemView {

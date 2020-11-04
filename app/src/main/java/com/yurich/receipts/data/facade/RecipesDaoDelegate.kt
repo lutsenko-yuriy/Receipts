@@ -3,7 +3,6 @@ package com.yurich.receipts.data.facade
 import com.yurich.receipts.data.dao.RecipesDao
 import com.yurich.receipts.domain.RecipeEntity
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 
 class RecipesDaoDelegate(
     private val dao: RecipesDao,
@@ -31,11 +30,6 @@ class RecipesDaoDelegate(
             .flatMap {
                 dao.insertRelations(recipes.map { mapper.buildDbRelation(it) }.flatten())
             }
-            .flatMap { dao.getAllByIds(it) }
-            .map { savedRecipes ->
-                savedRecipes.map { recipe ->
-                    mapper.buildRecipeEntity(recipe)
-                }
-            }
+            .map { recipes }
 
 }

@@ -48,7 +48,7 @@ class DetailViewModel(
 
         storage.updateRecipes(listOf(currentData))
                 .map { recipe -> recipe.first() }
-                .execute { data -> copy(currentData = data) }
+                .execute { data -> copy(currentData = data, afterSave = true) }
     }
 
     private fun buildNewRecipe(id: Long = Calendar.getInstance().timeInMillis) =

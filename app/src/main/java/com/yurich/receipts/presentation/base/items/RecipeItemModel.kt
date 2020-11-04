@@ -58,7 +58,12 @@ abstract class RecipeItemModel : EpoxyModelWithHolder<RecipeItemModel.Holder>() 
         }
 
         fun updateImages(images: List<ImageEntity>) {
-            imageAdapter.updateImages(images)
+            if (images.isNotEmpty()) {
+                imageAdapter.updateImages(images)
+                this.images.visibility = View.VISIBLE
+            } else {
+                this.images.visibility = View.GONE
+            }
         }
 
         private class Adapter : RecyclerView.Adapter<Adapter.ViewHolder>() {
@@ -77,6 +82,8 @@ abstract class RecipeItemModel : EpoxyModelWithHolder<RecipeItemModel.Holder>() 
             fun updateImages(newImages: List<ImageEntity>) {
                 items.clear()
                 items.addAll(newImages)
+
+                notifyDataSetChanged()
             }
 
             class ViewHolder(itemView: DeletablePictureItem) : RecyclerView.ViewHolder(itemView) {
