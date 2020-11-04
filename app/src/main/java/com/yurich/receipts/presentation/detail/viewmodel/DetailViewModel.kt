@@ -1,4 +1,4 @@
-package com.yurich.receipts.presentation.detail
+package com.yurich.receipts.presentation.detail.viewmodel
 
 import android.net.Uri
 import com.airbnb.mvrx.BaseMvRxViewModel
@@ -13,8 +13,8 @@ import org.koin.android.ext.android.inject
 import java.util.*
 
 class DetailViewModel(
-        initialState: DetailViewState,
-        private val storage: RecipesLocalStorage
+    initialState: DetailViewState,
+    private val storage: RecipesLocalStorage
 ) : BaseMvRxViewModel<DetailViewState>(initialState, debugMode = BuildConfig.DEBUG) {
 
     init {

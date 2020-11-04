@@ -1,4 +1,4 @@
-package com.yurich.receipts.presentation.general
+package com.yurich.receipts.presentation.general.viewmodel
 
 import com.airbnb.mvrx.BaseMvRxViewModel
 import com.airbnb.mvrx.BuildConfig
@@ -20,7 +20,10 @@ class GeneralViewModel(
         @JvmStatic
         override fun create(viewModelContext: ViewModelContext, state: GeneralViewState): GeneralViewModel {
             val service: RecipesLocalStorage by viewModelContext.activity.inject()
-            return GeneralViewModel(state, service)
+            return GeneralViewModel(
+                state,
+                service
+            )
         }
     }
 }

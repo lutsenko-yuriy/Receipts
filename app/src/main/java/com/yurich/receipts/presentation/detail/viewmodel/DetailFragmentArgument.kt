@@ -1,4 +1,4 @@
-package com.yurich.receipts.presentation.detail
+package com.yurich.receipts.presentation.detail.viewmodel
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

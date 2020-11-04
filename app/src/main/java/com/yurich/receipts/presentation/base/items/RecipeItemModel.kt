@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.NO_POSITION
 import com.airbnb.epoxy.*
 import com.yurich.receipts.R
 import com.yurich.receipts.domain.ImageEntity
@@ -18,7 +19,7 @@ abstract class RecipeItemModel : EpoxyModelWithHolder<RecipeItemModel.Holder>() 
     lateinit var recipe: RecipeEntity
 
     @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
-    var onRecipeClickListener: View.OnClickListener? = null
+    var onRecipeClickListener: (() -> Unit)? = null
 
     override fun bind(holder: Holder) {
         super.bind(holder)
@@ -28,7 +29,8 @@ abstract class RecipeItemModel : EpoxyModelWithHolder<RecipeItemModel.Holder>() 
 
             holder.updateImages(images)
 
-            holder.rootView.setOnClickListener(onRecipeClickListener)
+            holder.rootView.setOnClickListener { onRecipeClickListener?.invoke() }
+            holder.imageAdapter.setOnClickListener(onRecipeClickListener)
         }
     }
 
@@ -37,11 +39,11 @@ abstract class RecipeItemModel : EpoxyModelWithHolder<RecipeItemModel.Holder>() 
         lateinit var title: AppCompatTextView
         lateinit var description: AppCompatTextView
 
-        private lateinit var images: RecyclerView
+        lateinit var images: RecyclerView
 
         lateinit var rootView: View
 
-        private val imageAdapter = Adapter()
+        val imageAdapter = Adapter()
 
         override fun bindView(itemView: View) {
             title = itemView.findViewById(R.id.title)
@@ -66,12 +68,21 @@ abstract class RecipeItemModel : EpoxyModelWithHolder<RecipeItemModel.Holder>() 
             }
         }
 
-        private class Adapter : RecyclerView.Adapter<Adapter.ViewHolder>() {
+        class Adapter : RecyclerView.Adapter<Adapter.ViewHolder>() {
 
             private val items = mutableListOf<ImageEntity>()
 
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-                ViewHolder(DeletablePictureItem(parent.context))
+            private var imageClickListener: (() -> Unit)? = null
+
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+                val viewHolder = ViewHolder(DeletablePictureItem(parent.context))
+                viewHolder.itemView.setOnClickListener {
+                    if (viewHolder.adapterPosition != NO_POSITION) {
+                        imageClickListener?.invoke()
+                    }
+                }
+                return viewHolder
+            }
 
             override fun getItemCount() = items.size
 
@@ -84,6 +95,10 @@ abstract class RecipeItemModel : EpoxyModelWithHolder<RecipeItemModel.Holder>() 
                 items.addAll(newImages)
 
                 notifyDataSetChanged()
+            }
+
+            fun setOnClickListener(listener: (() -> Unit)?) {
+                imageClickListener = listener
             }
 
             class ViewHolder(itemView: DeletablePictureItem) : RecyclerView.ViewHolder(itemView) {

@@ -12,6 +12,7 @@ import com.yurich.receipts.presentation.base.items.AddNewPictureItemModel_
 import com.yurich.receipts.presentation.base.items.DeletablePictureItemModel_
 import com.yurich.receipts.presentation.base.items.recipeDetailItemView
 import com.yurich.receipts.presentation.base.simpleController
+import com.yurich.receipts.presentation.detail.viewmodel.DetailViewModel
 
 class DetailFragment : BaseFragment() {
 

@@ -1,4 +1,4 @@
-package com.yurich.receipts.presentation.detail
+package com.yurich.receipts.presentation.detail.viewmodel
 
 import com.airbnb.mvrx.Async
 import com.airbnb.mvrx.MvRxState

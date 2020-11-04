@@ -6,7 +6,8 @@ import com.yurich.receipts.presentation.base.BaseFragment
 import com.yurich.receipts.presentation.base.MvRxEpoxyController
 import com.yurich.receipts.presentation.base.items.recipeItem
 import com.yurich.receipts.presentation.base.simpleController
-import com.yurich.receipts.presentation.detail.DetailFragmentArgument
+import com.yurich.receipts.presentation.detail.viewmodel.DetailFragmentArgument
+import com.yurich.receipts.presentation.general.viewmodel.GeneralViewModel
 
 
 class GeneralFragment : BaseFragment() {
@@ -37,7 +38,7 @@ class GeneralFragment : BaseFragment() {
                 recipeItem {
                     id(recipe.id)
                     recipe(recipe)
-                    onRecipeClickListener { _, _, _, _ ->
+                    onRecipeClickListener {
                         navigateTo(
                             R.id.action_GeneralFragment_to_DetailFragment,
                             DetailFragmentArgument(recipe.id)
